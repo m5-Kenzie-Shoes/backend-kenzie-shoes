@@ -2,9 +2,15 @@ from rest_framework import serializers
 from .models import Product
 from users.serializers import UserSerializer
 from cart.serializers import ProductCartSerializer
+from rest_framework.validators import UniqueValidator
 
 
 class ProductSerializer(serializers.ModelSerializer):
+
+    name = serializers.EmailField(
+        validators=[UniqueValidator(queryset=Product.objects.all())],
+    )
+    
     class Meta:
         model = Product
         user = UserSerializer
