@@ -102,3 +102,33 @@ class SellOrderView(ListAPIView):
             seller_orders = self.queryset.filter(products_id=product_obj.products.id)
             return seller_orders
         return self.queryset
+    
+
+class BuyOrderDetailView(ListAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAccountOwner]
+
+    serializer_class = OrderSerializer
+    queryset = UserOrder.objects.all()
+
+    pagination_class = OrderPaginator
+
+    def get_queryset(self):
+        if not self.request.user.is_staff:
+            orders = self.queryset.filter(user=self.request.user.id)
+            return orders
+        return self.queryset
+    
+    
+class SellOrderDetailView(ListAPIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsSellerUser]
+
+    serializer_class = OrderSerializer
+    queryset = UserOrder.objects.all()
+
+    def get_queryset(self):
+        product_obj = self.queryset.all().last()
+        if self.request.user.id == product_obj.user_id:
+            user_seller = self.queryset.all().filter(id=self.kwargs.get("pk"))
+        
