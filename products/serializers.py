@@ -7,10 +7,9 @@ from rest_framework.validators import UniqueValidator
 
 class ProductSerializer(serializers.ModelSerializer):
 
-    name = serializers.EmailField(
-        validators=[UniqueValidator(queryset=Product.objects.all())],
+    name = serializers.CharField(max_length=50, validators=[UniqueValidator(queryset=Product.objects.all())],
     )
-    
+
     class Meta:
         model = Product
         user = UserSerializer
