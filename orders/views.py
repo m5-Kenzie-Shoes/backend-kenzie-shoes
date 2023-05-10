@@ -62,13 +62,13 @@ class OrderDetailView(UpdateAPIView):
         if order.products.user_id != self.request.user.id:
             raise ValidationError({"detail": "You do not have permission to perform this action."})
         serializer.save()
-        order = UserOrder.objects.filter(user_id=self.request.user.id).last()
-        msg = f"Prezado(a) {order.user.first_name}, Gostaríamos de informar que o status do seu pedido foi alterado para {order.status}. Agradecemos sua confiança em nossa empresa para suprir suas necessidades e estamos comprometidos em fornecer o melhor serviço possível. Atenciosamente, Kenzie Shoes APP"
-        send_mail("Alteração do status da ordem de compra",
-                  f"{msg}",
-                  settings.EMAIL_HOST_USER,
-                  [f"{order.user.email}"],
-                  False)
+        # order = UserOrder.objects.filter(user_id=self.request.user.id).last()
+        # msg = f"Prezado(a) {order.user.first_name}, Gostaríamos de informar que o status do seu pedido foi alterado para {order.status}. Agradecemos sua confiança em nossa empresa para suprir suas necessidades e estamos comprometidos em fornecer o melhor serviço possível. Atenciosamente, Kenzie Shoes APP"
+        # send_mail("Alteração do status da ordem de compra",
+        #           f"{msg}",
+        #           settings.EMAIL_HOST_USER,
+        #           [f"{order.user.email}"],
+        #           False)
 
 
 class BuyOrderView(ListAPIView):
