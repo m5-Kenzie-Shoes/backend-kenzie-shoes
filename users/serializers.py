@@ -12,6 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(
         validators=[UniqueValidator(queryset=User.objects.all())],
     )
+    
 
     def create(self, validated_data: dict) -> User:
         address_create = validated_data.pop("address")

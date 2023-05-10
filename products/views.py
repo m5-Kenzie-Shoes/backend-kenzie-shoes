@@ -28,7 +28,7 @@ class ProductView(ListCreateAPIView):
 
         return queryset
 
-    def perform_create(self, serializer) -> None:
+    def perform_create(self, serializer) -> None:      
         serializer.save(user=self.request.user)
 
 

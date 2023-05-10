@@ -11,7 +11,7 @@ class Category(models.TextChoices):
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     value = models.DecimalField(max_digits=12, decimal_places=2)
     category = models.CharField(
         max_length=20, choices=Category.choices, default=Category.BOTAS
