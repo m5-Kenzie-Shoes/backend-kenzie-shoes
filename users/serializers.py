@@ -2,8 +2,8 @@ from rest_framework.validators import UniqueValidator
 from addresses.serializers import AddressSerializer
 from rest_framework import serializers
 from addresses.models import Address
-from .models import *
-from cart.models import *
+from .models import User
+from cart.models import Cart
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -35,8 +35,6 @@ class UserSerializer(serializers.ModelSerializer):
         instance.save()
 
         return instance
-
-    
 
     class Meta:
         model = User

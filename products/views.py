@@ -3,7 +3,6 @@ from .models import Product
 from .serializers import ProductSerializer
 from rest_framework.pagination import PageNumberPagination
 from rest_framework_simplejwt.authentication import JWTAuthentication
-from users.permissions import IsAccountOwner
 from .premissions import IsAdminAndSellerCreateUpdatedDestroy
 
 

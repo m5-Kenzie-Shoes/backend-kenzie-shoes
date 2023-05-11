@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from .models import *
 from rest_framework.exceptions import ValidationError
 from products.models import Product
 from .models import Cart
