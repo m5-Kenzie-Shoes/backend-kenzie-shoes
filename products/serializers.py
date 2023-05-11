@@ -29,22 +29,3 @@ class ProductSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return Product.objects.create(**validated_data)
-
-
-# class ProductOrderSerializer(serializers.ModelSerializer):
-#     class Meta:
-#         model = Product
-#         user = UserOrderSerializer
-#         fields = [
-#             "id",
-#             "name",
-#             "value",
-#             "category",
-#             "description",
-#             "stock",
-#             "image_product",
-#             "user",
-#         ]
-      
-#         read_only_fields = ["id", "user"]
-#         exclude = ["stock"]

@@ -62,14 +62,6 @@ class OrderDetailView(UpdateAPIView):
         if order.products.user_id != self.request.user.id:
             raise ValidationError({"detail": "You do not have permission to perform this action."})
         serializer.save()
-        # order = UserOrder.objects.filter(user_id=self.request.user.id).last()
-        # msg = f"Prezado(a) {order.user.first_name}, Gostaríamos de informar que o status do seu pedido foi alterado para {order.status}. Agradecemos sua confiança em nossa empresa para suprir suas necessidades e estamos comprometidos em fornecer o melhor serviço possível. Atenciosamente, Kenzie Shoes APP"
-        # send_mail("Alteração do status da ordem de compra",
-        #           f"{msg}",
-        #           settings.EMAIL_HOST_USER,
-        #           [f"{order.user.email}"],
-        #           False)
-
 
 class BuyOrderView(ListAPIView):
     authentication_classes = [JWTAuthentication]
@@ -102,33 +94,3 @@ class SellOrderView(ListAPIView):
             seller_orders = self.queryset.filter(products_id=product_obj.products.id)
             return seller_orders
         return self.queryset
-    
-
-class BuyOrderDetailView(ListAPIView):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsAccountOwner]
-
-    serializer_class = OrderSerializer
-    queryset = UserOrder.objects.all()
-
-    pagination_class = OrderPaginator
-
-    def get_queryset(self):
-        if not self.request.user.is_staff:
-            orders = self.queryset.filter(user=self.request.user.id)
-            return orders
-        return self.queryset
-    
-    
-class SellOrderDetailView(ListAPIView):
-    authentication_classes = [JWTAuthentication]
-    permission_classes = [IsSellerUser]
-
-    serializer_class = OrderSerializer
-    queryset = UserOrder.objects.all()
-
-    def get_queryset(self):
-        product_obj = self.queryset.all().last()
-        if self.request.user.id == product_obj.user_id:
-            user_seller = self.queryset.all().filter(id=self.kwargs.get("pk"))
-        
